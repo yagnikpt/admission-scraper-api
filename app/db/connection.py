@@ -1,10 +1,7 @@
 """Direct PostgreSQL connection helper for production environments."""
 
-import os
 import socket
-import urllib.parse
 from sqlalchemy import create_engine, event
-from sqlalchemy.engine.url import make_url
 
 
 def get_production_engine(db_url):

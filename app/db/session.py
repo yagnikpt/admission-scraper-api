@@ -10,6 +10,8 @@ load_dotenv()
 
 # Get database URL from environment variable
 DB_URL = os.environ.get("DB_URL")
+if DB_URL is None:
+    raise ValueError("DB_URL environment variable is not set")
 
 # Determine if we're in production environment (e.g., on render.com)
 IS_PRODUCTION = os.environ.get("ENVIRONMENT") == "production"

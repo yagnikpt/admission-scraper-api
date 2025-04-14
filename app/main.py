@@ -2,7 +2,7 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from dotenv import load_dotenv
 from app.api.api import api_router
 
 
@@ -13,6 +13,7 @@ def create_application() -> FastAPI:
     Returns:
         FastAPI: Configured FastAPI application
     """
+    load_dotenv()
     # Create FastAPI app
     application = FastAPI(
         title="Admissions API",

@@ -7,6 +7,7 @@ from pydantic import BaseModel
 
 from app.schemas.program import ProgramResponse
 from app.schemas.institution import InstitutionResponse, StateResponse
+from app.schemas.tag import TagResponse
 
 
 class AnnouncementBase(BaseModel):
@@ -38,6 +39,7 @@ class AnnouncementResponse(AnnouncementBase):
     programs: List[ProgramResponse] = []
     institution: Optional[InstitutionResponse] = None
     state: Optional[StateResponse] = None
+    tags: List[TagResponse] = []  # Add tags to the response
 
     class Config:
         from_attributes = True

@@ -59,6 +59,20 @@ class Program(Base):
     )
 
 
+class Tag(Base):
+    """Database model for tags."""
+
+    __tablename__ = "tags"
+
+    tag_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    name = Column(String(50), nullable=False)
+
+    # Define relationship to announcements
+    announcements = relationship(
+        "Announcement", secondary="announcement_tags", back_populates="tags"
+    )
+
+
 class Announcement(Base):
     """Database model for announcements."""
 
@@ -87,6 +101,10 @@ class Announcement(Base):
     )
     institution = relationship("Institution", back_populates="announcements")
     state = relationship("State", back_populates="announcements")
+    # Add relationship to tags
+    tags = relationship(
+        "Tag", secondary="announcement_tags", back_populates="announcements"
+    )
 
 
 class ProgramAnnouncement(Base):
@@ -100,5 +118,22 @@ class ProgramAnnouncement(Base):
     announcement_id = Column(
         UUID(as_uuid=True),
         ForeignKey("announcements.announcement_id"),
+        primary_key=True,
+    )
+
+
+class AnnouncementTag(Base):
+    """Database model for the announcement_tags junction table."""
+
+    __tablename__ = "announcement_tags"
+
+    announcement_id = Column(
+        UUID(as_uuid=True),
+        ForeignKey("announcements.announcement_id", ondelete="CASCADE"),
+        primary_key=True,
+    )
+    tag_id = Column(
+        UUID(as_uuid=True),
+        ForeignKey("tags.tag_id", ondelete="CASCADE"),
         primary_key=True,
     )
